@@ -1,7 +1,7 @@
 ---
 version: "2.1"
 services:
-  ipfs:
+  ipfs_stack:
     image: ghcr.io/linuxserver/ipfs:version-v2.11.4
     container_name: ipfs-server
     environment:
