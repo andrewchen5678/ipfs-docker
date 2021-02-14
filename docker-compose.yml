@@ -1,0 +1,19 @@
+---
+version: "2.1"
+services:
+  ipfs:
+    image: ghcr.io/linuxserver/ipfs:version-v2.11.4
+    container_name: ipfs-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ~/ipfs-docker:/config
+    ports:
+      - 2080:80
+      - 4001:4001
+      - 5001:5001
+      - 8080:8080
+      #- 443:443 #optional
+    restart: "no"
