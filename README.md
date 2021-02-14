@@ -26,4 +26,4 @@ ipfs config --json Gateway.PublicGateways '{
 ipfs daemon
 
 cloudflare dnslink (better than ipns)
-`CF_API_TOKEN=getfrom1password npx dnslink-cloudflare -d andrewtheguy.com -l /ipfs/changeme -r _dnslink.ipfs`
+`CF_API_TOKEN=getfrom1password npx dnslink-cloudflare -d andrewtheguy.com -l /ipfs/changeme -r _dnslink.webdrive`
