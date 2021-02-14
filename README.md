@@ -14,6 +14,16 @@ for the first time
 brew install ipfs
 ipfs init
 
+## disable localhost subdomain
+```
+ipfs config --json Gateway.PublicGateways '{
+    "localhost": {
+      "UseSubdomains": false,
+      "Paths": ["/ipfs", "/ipns"]
+    }
+  }'
+```
+
 ipfs daemon
 
 cloudflare dnslink (better than ipns)
