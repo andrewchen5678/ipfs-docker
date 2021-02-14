@@ -8,11 +8,10 @@ run command
 ipns publish 
 `docker-compose exec ipfs_stack ipfs name publish --key=publishkey /ipfs/changeme`
 
-#homebrew (recommended)
+# IPFS Desktop (recommended)
+https://github.com/ipfs-shipyard/ipfs-desktop
 
-for the first time
-brew install ipfs
-ipfs init
+afterwards `ln -s /Applications/IPFS\ Desktop.app/Contents/Resources/app.asar.unpacked/node_modules/go-ipfs/go-ipfs/ipfs ~/bin/ipfs`
 
 ## disable localhost subdomain
 ```
