@@ -10,7 +10,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - $HOME/ipfstest:/config
-    ports:
+    #ports:
       #- 2080:80
       #- 4001:4001
       #- 5001:5001
