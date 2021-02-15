@@ -9,11 +9,11 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - ~/ipfs-docker:/config
+      - $HOME/ipfstest:/config
     ports:
-      - 2080:80
-      - 4001:4001
-      - 5001:5001
-      - 8080:8080
+      #- 2080:80
+      #- 4001:4001
+      #- 5001:5001
+      #- 8080:8080
       #- 443:443 #optional
     restart: "no"
