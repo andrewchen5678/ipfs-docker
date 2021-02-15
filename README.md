@@ -1,12 +1,4 @@
-#docker (not recommended)
-start
-`docker-compose up`
 
-run command
-`docker-compose exec ipfs_stack ipfs --version`
-
-ipns publish 
-`docker-compose exec ipfs_stack ipfs name publish --key=publishkey /ipfs/changeme`
 
 # IPFS Desktop (recommended)
 https://github.com/ipfs-shipyard/ipfs-desktop
@@ -23,9 +15,18 @@ ipfs config --json Gateway.PublicGateways '{
   }'
 ```
 
-ipfs daemon
+ipns publish 
+`docker-compose exec ipfs_stack ipfs name publish --key=publishkey /ipfs/changeme`
 
 cloudflare dnslink (better than ipns)
 ```
 CF_API_TOKEN=getfrom1password npx dnslink-cloudflare -d andrewtheguy.com -l /ipfs/changeme -r _dnslink.webdrive
 ```
+
+# docker (for testing only)
+start
+`docker-compose up`
+
+run command
+`docker-compose exec ipfs_stack ipfs --version`
+
