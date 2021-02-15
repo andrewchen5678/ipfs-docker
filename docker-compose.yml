@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - $HOME/ipfstest:/config
+      - ./ipfstest:/config
     #ports:
       #- 2080:80
       #- 4001:4001
