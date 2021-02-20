@@ -2,7 +2,6 @@
 version: "2.1"
 services:
   ipfs_host:
-  # docker run -d --name ipfs_host -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/go-ipfs:latest
     image: ipfs/go-ipfs:v0.7.0
     container_name: ipfs_host
     environment:
@@ -10,8 +9,8 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - ./ipfstest/config:/data/ipfs
-      - ./ipfstest/export:/export
+      - ./ipfsdata:/data/ipfs
+      - $HOME/ipfs_export:/export
     working_dir: /export  
     #ports:
       #- 4001:4001

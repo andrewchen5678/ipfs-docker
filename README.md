@@ -1,6 +1,6 @@
 
 
-# IPFS Desktop (recommended)
+# IPFS Desktop
 https://github.com/ipfs-shipyard/ipfs-desktop
 
 afterwards `ln -s /Applications/IPFS\ Desktop.app/Contents/Resources/app.asar.unpacked/node_modules/go-ipfs/go-ipfs/ipfs ~/bin/ipfs`
@@ -20,12 +20,12 @@ cloudflare dnslink (better than ipns)
 CF_API_TOKEN=getfrom1password npx dnslink-cloudflare -d andrewtheguy.com -l /ipfs/changeme -r _dnslink.webdrive
 ```
 
-# docker (for testing only)
+# docker (will be separate environment)
 start
 `docker-compose up`
 
 clean up
-`rm -rf ./ipfstest/*`
+`rm -rf ./ipfsdata/*`
 
 run command
 `docker-compose exec ipfs_host ipfs --version`
