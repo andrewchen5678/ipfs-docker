@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import os
 import subprocess
 import sys
 import traceback
@@ -16,19 +17,11 @@ parser = ArgumentParser(
 subparsers = parser.add_subparsers(help="Command")
 parser.set_defaults(command=lambda _: parser.print_help())
 
-cmd_test_gateway = subparsers.add_parser(
-    "keep_alive",
-    description="downloading folder through a gateway as tar archive",
-    epilog="keep_alive"
-)
-cmd_test_gateway.add_argument(
-    "cid", help="cid of folder")
-
 
 def download_with_curl(gateway,hash):
 
     # or api way
-    url = f"https://{gateway}/api/v0/get?arg={hash}&archive=true"
+    url = f"https://{gateway}/api/v0/get?arg={hash}&archive=true" # &archive=true is more likey to bypass cache
     print('api ' + url)
 
     Path(f"./test/{gateway}").mkdir(parents=True, exist_ok=True)
@@ -63,6 +56,14 @@ def list_directory(gateway,cid):
         return result.decode("utf-8")
 
 
+cmd_test_gateway = subparsers.add_parser(
+    "keep_alive",
+    description="downloading folder through a gateway as tar archive",
+    epilog="keep_alive"
+)
+cmd_test_gateway.add_argument(
+    "cid", help="cid of folder")
+
 def run_test_gateway(args):
     """
     test downloading through gateways
@@ -89,11 +90,39 @@ def run_test_gateway(args):
                 except:
                     traceback.print_exc()
 
-
-
-
-
 cmd_test_gateway.set_defaults(command=run_test_gateway)
+
+
+cmd_m3u8 = subparsers.add_parser(
+    "m3u8",
+    description="m3u8",
+    epilog="m3u8"
+)
+cmd_m3u8.add_argument(
+    "cid", help="cid of folder")
+
+def m3u8(args):
+    """
+    test downloading through gateways
+    """
+    if __name__ == '__main__':
+        gateway = 'ipfs.io' # the default one I use first, it uses 0.8.0
+        resp = list_directory(gateway,args.cid)
+        result = json.loads(resp)
+        links = result["Objects"][0]["Links"]
+        filtered_results = [(link['Hash'],link['Name']) for link in links if link['Type'] == 2]
+
+        with open(f"./test/{args.cid}.m3u8", "w") as f:
+            print('#EXTM3U',file=f)
+            for pair in filtered_results:
+                path=pair[1]
+                filename, file_extension = os.path.splitext(path)
+                if file_extension.lower() not in ['.mp3','.m4a']:
+                    continue
+                print(f'#EXTINF:-1,{filename}', file=f)
+                print(f'https://ipfs.io/ipfs/{pair[0]}', file=f)
+cmd_m3u8.set_defaults(command=m3u8)
+
 
 # Finally, use the new parser
 all_args = parser.parse_args()
