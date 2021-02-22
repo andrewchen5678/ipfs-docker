@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "60a1ec5d6967de3370779fe6870347d9eeb5a132c711a19c2ae0a3173c87da77"
+            "sha256": "7f7606f08e0544d8d012ef4d097dabdd6df6843a28793eb6551245d4b2db4242"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,11 +15,6 @@
             }
         ]
     },
-    "default": {
-        "ipfshttpclient": {
-            "git": "https://github.com/ipfs-shipyard/py-ipfs-http-client",
-            "ref": "bcec97aa83cf0b0348d8e160c3f68dc8495dbc1b"
-        }
-    },
+    "default": {},
     "develop": {}
 }
