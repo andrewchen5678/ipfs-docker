@@ -28,7 +28,7 @@ def download_with_curl(gateway,hash):
     Path(f"./test/{gateway}").mkdir(parents=True, exist_ok=True)
 
     with open(f"./test/{gateway}/{hash}.log", "wb") as f:
-        p = Popen(["curl", '-X','POST', url] , stdout=DEVNULL, stderr=f)
+        p = Popen(["curl", '-f', '-X','POST', url] , stdout=DEVNULL, stderr=f)
         p.wait() # wait for process to finish; this also sets the returncode variable inside 'res'
         #print(p.returncode)
         if p.returncode != 0:
@@ -46,9 +46,8 @@ def run_test_gateway(args):
             'ipfs.io', # the default one I use first
             'dweb.link',
             #'cloudflare-ipfs.com', wonky
-            #'gateway.ravenland.org',
-            #'hardbin.com',
-            #'astyanax.io',
+            'jacl.tech', # pinning also works :)
+            'gateway.pinata.cloud',
         ]
 
 
