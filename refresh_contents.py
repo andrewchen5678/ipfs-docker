@@ -47,7 +47,7 @@ def run_test_gateway(args):
             'dweb.link',
             #'cloudflare-ipfs.com', wonky
             'jacl.tech', # pinning also works :)
-            'gateway.pinata.cloud',
+            #'gateway.pinata.cloud',
         ]
 
 
