@@ -1,0 +1,25 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "60a1ec5d6967de3370779fe6870347d9eeb5a132c711a19c2ae0a3173c87da77"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.8"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "ipfshttpclient": {
+            "git": "https://github.com/ipfs-shipyard/py-ipfs-http-client",
+            "ref": "bcec97aa83cf0b0348d8e160c3f68dc8495dbc1b"
+        }
+    },
+    "develop": {}
+}
