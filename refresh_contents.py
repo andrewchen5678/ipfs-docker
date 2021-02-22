@@ -71,8 +71,8 @@ def run_test_gateway(args):
     if __name__ == '__main__':
         gateways = [
             'ipfs.io', # the default one I use first, it uses 0.8.0
-            'dweb.link',
-            'jacl.tech', # pinning also works :)
+            #'dweb.link',
+            #'jacl.tech', # pinning also works :)
         ]
 
 
