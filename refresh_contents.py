@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import argparse
+import glob
 import json
 import os
 import subprocess
@@ -64,6 +66,13 @@ cmd_test_gateway = subparsers.add_parser(
 cmd_test_gateway.add_argument(
     "cid", help="cid of folder")
 
+
+cmd_test_gateway.add_argument(
+    "-s",
+    '--single-archive',
+    help="download as single archive instead of individually (works with subdirectories)",
+    action='store_true')
+
 def run_test_gateway(args):
     """
     test downloading through gateways
@@ -74,21 +83,36 @@ def run_test_gateway(args):
             #'dweb.link',
             #'jacl.tech', # pinning also works :)
         ]
+        # get a recursive list of file paths that matches pattern including sub directories
+        file_list = glob.glob('./test/**/*.log', recursive=True)
+        # Iterate over the list of filepaths & remove each file.
+        for file_path in file_list:
+            os.remove(file_path)
 
-
-        with Pool(10) as p:
-            for gateway in gateways:
-                resp = list_directory(gateway,args.cid)
-                result = json.loads(resp)
-                links = result["Objects"][0]["Links"]
-                filtered_results = [link['Hash'] for link in links if link['Type'] == 2]
-
-                arr = [(gateway, result,) for result in filtered_results]
-                r = p.starmap_async(download_with_curl, arr )
+        if(args.single_archive):
+            print('single archive')
+            with Pool(5) as p:
+                arr = [(gateway, args.cid,) for gateway in gateways]
+                r = p.starmap_async(download_with_curl, arr)
                 try:
                     r.get()
                 except:
                     traceback.print_exc()
+        else:
+            print('download individually')
+            with Pool(10) as p:
+                for gateway in gateways:
+                    resp = list_directory(gateway,args.cid)
+                    result = json.loads(resp)
+                    links = result["Objects"][0]["Links"]
+                    filtered_results = [link['Hash'] for link in links if link['Type'] == 2]
+
+                    arr = [(gateway, result,) for result in filtered_results]
+                    r = p.starmap_async(download_with_curl, arr )
+                    try:
+                        r.get()
+                    except:
+                        traceback.print_exc()
 
 cmd_test_gateway.set_defaults(command=run_test_gateway)
 
@@ -121,6 +145,7 @@ def m3u8(args):
                     continue
                 print(f'#EXTINF:-1,{filename}', file=f)
                 print(f'https://ipfs.io/ipfs/{pair[0]}', file=f)
+
 cmd_m3u8.set_defaults(command=m3u8)
 
 
