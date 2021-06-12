@@ -119,7 +119,7 @@ cmd_test_gateway.set_defaults(command=run_test_gateway)
 
 cmd_m3u8 = subparsers.add_parser(
     "m3u8",
-    description="m3u8",
+    description="generate m3u8 from ipfs directory",
     epilog="m3u8"
 )
 cmd_m3u8.add_argument(
