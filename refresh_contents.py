@@ -73,16 +73,25 @@ cmd_test_gateway.add_argument(
     help="download as single archive instead of individually (works with subdirectories)",
     action='store_true')
 
+cmd_test_gateway.add_argument(
+    "-g",
+    '--gateway',
+    help="gateway to use",
+    default='ipfs.io') # the default one I use first, it uses 0.8.0
+
 def run_test_gateway(args):
     """
     test downloading through gateways
     """
     if __name__ == '__main__':
-        gateways = [
-            'ipfs.io', # the default one I use first, it uses 0.8.0
-            #'dweb.link',
-            #'jacl.tech', # pinning also works :)
-        ]
+        # gateways = [
+        #     'ipfs.io',
+        #     #'dweb.link',
+        #     #'jacl.tech', # pinning also works :)
+        # ]
+
+        gateway = args.gateway
+
         # get a recursive list of file paths that matches pattern including sub directories
         file_list = glob.glob('./test/**/*.log', recursive=True)
         # Iterate over the list of filepaths & remove each file.
@@ -92,7 +101,9 @@ def run_test_gateway(args):
         if(args.single_archive):
             print('single archive')
             with Pool(5) as p:
-                arr = [(gateway, args.cid,) for gateway in gateways]
+                #arr = [(gateway, args.cid,) for gateway in gateways]
+                #switch back to single one
+                arr = [(gateway, args.cid,)]
                 r = p.starmap_async(download_with_curl, arr)
                 try:
                     r.get()
@@ -101,6 +112,7 @@ def run_test_gateway(args):
         else:
             print('download individually')
             with Pool(10) as p:
+                gateways = [gateway]
                 for gateway in gateways:
                     resp = list_directory(gateway,args.cid)
                     result = json.loads(resp)
@@ -125,12 +137,18 @@ cmd_m3u8 = subparsers.add_parser(
 cmd_m3u8.add_argument(
     "cid", help="cid of folder")
 
+cmd_m3u8.add_argument(
+    "-g",
+    '--gateway',
+    help="gateway to use",
+    default='ipfs.io') # the default one I use first, it uses 0.8.0
+
 def m3u8(args):
     """
     test downloading through gateways
     """
     if __name__ == '__main__':
-        gateway = 'ipfs.io' # the default one I use first, it uses 0.8.0
+        gateway = args.gateway
         resp = list_directory(gateway,args.cid)
         result = json.loads(resp)
         links = result["Objects"][0]["Links"]
@@ -144,7 +162,7 @@ def m3u8(args):
                 if file_extension.lower() not in ['.mp3','.m4a']:
                     continue
                 print(f'#EXTINF:-1,{filename}', file=f)
-                print(f'https://ipfs.io/ipfs/{pair[0]}', file=f)
+                print(f'https://{gateway}/ipfs/{pair[0]}', file=f)
 
 cmd_m3u8.set_defaults(command=m3u8)
 

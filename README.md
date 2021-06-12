@@ -16,8 +16,20 @@ ipfs config --json Gateway.PublicGateways '{
 ```
 
 # keep alive
+```
 ./refresh_contents.py keep_alive cid of directory
+```
+example:
+```
+./refresh_contents.py keep_alive QmU4LAxfpsY5A7pzYPetwLoAj8txmLKUUU2EeRaLQx2KsH --gateway=dweb.link -s
+```
 
 
 # generate m3u8
+```
 ./refresh_contents.py m3u8 cid of directory
+```
+example:
+```
+./refresh_contents.py m3u8 QmU4LAxfpsY5A7pzYPetwLoAj8txmLKUUU2EeRaLQx2KsH --gateway=dweb.link
+```
