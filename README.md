@@ -15,20 +15,9 @@ ipfs config --json Gateway.PublicGateways '{
   }'
 ```
 
-cloudflare dnslink (better than ipns)
-```
-CF_API_TOKEN=getfrom1password npx dnslink-cloudflare -d andrewtheguy.com -l /ipfs/changeme -r _dnslink.webdrive
-```
+# keep alive
+./refresh_contents.py keep_alive cid of directory
 
-# docker (will be separate environment)
-start
-`docker-compose up`
 
-clean up
-`rm -rf ./ipfsdata/*`
-
-run command
-`docker-compose exec ipfs_host ipfs --version`
-
-ipns publish 
-`docker-compose exec ipfs_host ipfs name publish --key=publishkey /ipfs/changeme`
+# generate m3u8
+./refresh_contents.py m3u8 cid of directory
