@@ -10,6 +10,9 @@ from argparse import ArgumentParser
 from multiprocessing import Pool
 from subprocess import Popen, PIPE, DEVNULL
 from pathlib import Path
+import m3u8
+from urllib.parse import urlparse
+import re
 
 #import ipfshttpclient
 
@@ -30,6 +33,30 @@ def download_with_curl(gateway,hash):
 
     with open(f"./test/{gateway}/{hash}.log", "wb") as f:
         p = Popen(["curl", '-f', '-X','POST', url] , stdout=DEVNULL, stderr=f)
+        p.wait() # wait for process to finish; this also sets the returncode variable inside 'res'
+        #print(p.returncode)
+        if p.returncode != 0:
+            #print('chafa')
+            raise Exception(f"{url} download failed, exit code {p.returncode}")
+        else:
+            print(f'finished downloading through {url}')
+
+
+def download_with_curl_by_url(url):
+
+    print('api ' + url)
+
+
+
+    o = urlparse(url)
+
+    folder = re.sub('[^A-Za-z0-9.]', '', o.netloc)
+    path = re.sub('[^A-Za-z0-9.]', '', o.path)
+
+    Path(f"./test/{folder}").mkdir(parents=True, exist_ok=True)
+
+    with open(f"./test/{folder}/{path}.log", "wb") as f:
+        p = Popen(["curl", '-f', url] , stdout=DEVNULL, stderr=f)
         p.wait() # wait for process to finish; this also sets the returncode variable inside 'res'
         #print(p.returncode)
         if p.returncode != 0:
@@ -143,7 +170,7 @@ cmd_m3u8.add_argument(
     help="gateway to use",
     default='ipfs.io') # the default one I use first, it uses 0.8.0
 
-def m3u8(args):
+def gen_m3u8(args):
     """
     test downloading through gateways
     """
@@ -164,7 +191,42 @@ def m3u8(args):
                 print(f'#EXTINF:-1,{filename}', file=f)
                 print(f'https://{gateway}/ipfs/{pair[0]}', file=f)
 
-cmd_m3u8.set_defaults(command=m3u8)
+cmd_m3u8.set_defaults(command=gen_m3u8)
+
+cmd_test_playlist = subparsers.add_parser(
+    "test_playlist",
+    description="downloading playlist through gateway",
+    epilog="test_playlist"
+)
+cmd_test_playlist.add_argument(
+    "playlist", help="m3u playlist")
+
+
+def run_test_playlist(args):
+    """
+    test downloading through gateways
+    """
+    if __name__ == '__main__':
+
+        # get a recursive list of file paths that matches pattern including sub directories
+        file_list = glob.glob('./test/**/*.log', recursive=True)
+        # Iterate over the list of filepaths & remove each file.
+        for file_path in file_list:
+            os.remove(file_path)
+
+        playlist = m3u8.load(args.playlist)
+        files = playlist.files
+
+        print('download individually')
+        with Pool(10) as p:
+            arr = [(file,) for file in files]
+            r = p.starmap_async(download_with_curl_by_url, arr)
+            try:
+                r.get()
+            except:
+                traceback.print_exc()
+
+cmd_test_playlist.set_defaults(command=run_test_playlist)
 
 
 # Finally, use the new parser
