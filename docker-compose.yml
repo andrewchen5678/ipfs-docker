@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   ipfs_host:
-    image: ipfs/go-ipfs:v0.7.0
+    image: ipfs/go-ipfs:v0.10.0
     container_name: ipfs_host
     environment:
       - PUID=1000
@@ -10,6 +10,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - ./ipfsdata:/data/ipfs
+      #- ./config:/data/ipfs/config:ro
       - $HOME/ipfs_export:/export
     working_dir: /export  
     ports:
