@@ -11,10 +11,10 @@ services:
     volumes:
       - ./ipfsdata:/data/ipfs
       #- ./config:/data/ipfs/config:ro
-      - $HOME/ipfs_export:/export
+      #- $HOME/ipfs_export:/export
     working_dir: /export  
-    ports:
-      - 4001:4001
-      - 5001:5001
-      - 8080:8080
+    #ports:
+    #  - 4001:4001
+    #  - 5001:5001
+    #  - 8080:8080
     restart: "no"
