@@ -33,3 +33,12 @@ example:
 ```
 ./refresh_contents.py m3u8 QmU4LAxfpsY5A7pzYPetwLoAj8txmLKUUU2EeRaLQx2KsH --gateway=dweb.link
 ```
+
+# play with docker
+```
+IPFS_REPO_PATH=/Volumes/andrew10/ipfs IPFS_EXPORT_PATH=$HOME docker-compose up
+```
+and then in another window
+```
+docker exec -it ipfs_host /bin/sh
+```

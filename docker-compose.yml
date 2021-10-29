@@ -9,9 +9,9 @@ services:
       - PGID=1000
       - TZ=America/Los_Angeles
     volumes:
-      - ./ipfsdata:/data/ipfs
+      - ${IPFS_REPO_PATH:-./ipfsdata}:/data/ipfs
       #- ./config:/data/ipfs/config:ro
-      #- $HOME/ipfs_export:/export
+      - ${IPFS_EXPORT_PATH:-~/ipfs_export}:/export:ro
     working_dir: /export  
     #ports:
     #  - 4001:4001
