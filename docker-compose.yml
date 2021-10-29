@@ -14,8 +14,8 @@ services:
       #- ./config:/data/ipfs/config:ro
       - ${IPFS_EXPORT_PATH:-~/ipfs_export}:/export:ro
     working_dir: /export
-    #ports:
+    ports:
     #  - 4001:4001
     #  - 5001:5001
-    #  - 8080:8080
+      - 127.0.0.1:${IPFS_GATEWAY_PORT:-9876}:8080 # read only gateway
     restart: "no"
