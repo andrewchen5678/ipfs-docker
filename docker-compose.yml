@@ -5,6 +5,7 @@ services:
     image: ipfs/go-ipfs:v0.10.0
     container_name: ipfs_host
     environment:
+      - IPFS_PROFILE=server
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
@@ -12,7 +13,7 @@ services:
       - ${IPFS_REPO_PATH:-./ipfsdata}:/data/ipfs
       #- ./config:/data/ipfs/config:ro
       - ${IPFS_EXPORT_PATH:-~/ipfs_export}:/export:ro
-    working_dir: /export  
+    working_dir: /export
     #ports:
     #  - 4001:4001
     #  - 5001:5001
