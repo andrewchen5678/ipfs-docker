@@ -36,7 +36,7 @@ example:
 
 # play with docker
 ```
-IPFS_REPO_PATH=/Volumes/andrew10/ipfs IPFS_EXPORT_PATH=$HOME docker-compose up
+IPFS_PATH=/Volumes/andrew10/ipfs IPFS_DOCKER_EXPORT_PATH=$HOME docker-compose up
 ```
 and then in another window
 ```
