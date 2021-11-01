@@ -42,3 +42,10 @@ and then in another window
 ```
 docker exec -it ipfs_host /bin/sh
 ```
+
+#set ipfs path on shell
+```shell
+NEW_IPFS_PATH=/path source ~/bin/set_ipfs_path.sh
+```
+
+run `download-youtube-playlist.py socks5://127.0.0.1:19050`
